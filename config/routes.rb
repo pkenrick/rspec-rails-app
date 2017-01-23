@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'activations/new'
+
   get 'sessions/new'
 
   get 'users/show'
@@ -7,4 +9,6 @@ Rails.application.routes.draw do
 
   resources :users
   resources :sessions
+  resources :activations
+  get '/activations/activate/:id', to: 'activations#activate', as: :activate_account
 end

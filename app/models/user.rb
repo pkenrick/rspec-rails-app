@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -22,7 +22,7 @@ class User < ApplicationRecord
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
     self.update_attribute(:remember_digest, User.digest(self.remember_token))
-    self.remember_token
+    # self.remember_token
   end
 
   def authenticate_remember_token(token)
@@ -32,6 +32,21 @@ class User < ApplicationRecord
 
   def forget
     self.update_attribute(:remember_digest, nil)
+  end
+
+  def create_activation_token
+    self.activation_token = SecureRandom.urlsafe_base64
+    self.update_attributes(activation_digest: User.digest(self.activation_token), activation_sent_at: Time.now)
+    ActivationsMailer.activation_email(self).deliver_now
+  end
+
+  def authenticate_activation_token(token)
+    return false if self.activation_digest ==  nil
+    BCrypt::Password.new(self.activation_digest) == token
+  end
+
+  def activate
+    self.update_attributes(activation_digest: nil, activation_sent_at: nil, account_activated: true)
   end
 
 end

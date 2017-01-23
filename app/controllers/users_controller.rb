@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.assign_attributes(account_activated: false)
+      @user.create_activation_token
       flash[:success] = "Welcome! You have signed up."
       redirect_to user_path(@user)
     else
