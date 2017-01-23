@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Sign up</h1>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <%= form_for @user, url: users_path do |f| %>
+
+            <%= render 'shared/error_messages' %>
+
+            <%= f.label :emailzzz %>
+            <%= f.text_field :email, class: 'form-control' %><br>
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name, class: 'form-control' %><br>
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name, class: 'form-control' %><br>
+            <%= f.label :password %>
+            <%= f.password_field :password, class: 'form-control' %><br>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %><br>
+            <%= f.submit :submit, class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+  </body>
+</html>
