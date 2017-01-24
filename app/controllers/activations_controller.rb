@@ -2,7 +2,7 @@ class ActivationsController < ApplicationController
 
   def activate
     user = User.find_by(id: params[:id])
-    if user && user.authenticate_activation_token(params[:activation_token]) && user.activation_sent_at > 2.days.ago
+    if user && user.authenticate_token(params[:activation_token], "activation") && user.activation_sent_at > 2.days.ago
       user.activate
       flash[:success] = "Your account has now been activated."
       login(user)
@@ -13,5 +13,5 @@ class ActivationsController < ApplicationController
       redirect_to new_user_path
     end
   end
-
+  
 end

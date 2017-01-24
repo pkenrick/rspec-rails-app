@@ -11,11 +11,14 @@ module SessionsHelper
   end
 
   def current_user
+    puts "==== In the current user method ===="
     if session[:user_id]
       @current_user ||= User.find_by(id: session[:user_id])
     else cookies.signed[:user_id]
+      puts "==== In the right pat of the current_user method ===="
+      puts "==== the user ID in the cookies is: #{cookies.signed[:user_id]} ===="
       user = User.find_by(id: cookies.signed[:user_id])
-      if user && user.authenticate_remember_token(cookies[:remember_token])
+      if user && user.authenticate_token(cookies[:remember_token], "remember")
         login(user)
         @current_user = user
       end

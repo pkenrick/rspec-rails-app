@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
     User.new(email: "john@email.com", first_name: "John", last_name: "Smith", age: 21, password: "helloo", password_confirmation: "helloo")
   end
 
-  context 'creating the user' do
+  context 'validations' do
     it 'validates a user with all attributes completed' do
       expect(user).to be_valid
     end

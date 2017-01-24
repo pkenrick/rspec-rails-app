@@ -22,12 +22,12 @@ class User < ApplicationRecord
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
     self.update_attribute(:remember_digest, User.digest(self.remember_token))
-    # self.remember_token
   end
 
-  def authenticate_remember_token(token)
-    return false if self.remember_digest ==  nil
-    BCrypt::Password.new(self.remember_digest) == token
+  def authenticate_token(token, type)
+    puts "==== In the authenticate_token method with type: #{type} ===="
+    return false if self.send("#{type}_digest") ==  nil
+    BCrypt::Password.new(self.send("#{type}_digest")) == token
   end
 
   def forget
@@ -40,10 +40,10 @@ class User < ApplicationRecord
     ActivationsMailer.activation_email(self).deliver_now
   end
 
-  def authenticate_activation_token(token)
-    return false if self.activation_digest ==  nil
-    BCrypt::Password.new(self.activation_digest) == token
-  end
+  # def authenticate_activation_token(token)
+  #   return false if self.activation_digest ==  nil
+  #   BCrypt::Password.new(self.activation_digest) == token
+  # end
 
   def activate
     self.update_attributes(activation_digest: nil, activation_sent_at: nil, account_activated: true)
