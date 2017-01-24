@@ -25,7 +25,6 @@ class User < ApplicationRecord
   end
 
   def authenticate_token(token, type)
-    puts "==== In the authenticate_token method with type: #{type} ===="
     return false if self.send("#{type}_digest") ==  nil
     BCrypt::Password.new(self.send("#{type}_digest")) == token
   end

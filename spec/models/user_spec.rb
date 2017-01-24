@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
     it 'should return false for user with a nil digest
     (simulating the situation where the app is open in two browsers,
     the user logs out in the first browser, then closes the second without logging out)' do
-      expect(user.authenticate_remember_token('')).to eq(false)
+      expect(user.authenticate_token('', 'remember')).to eq(false)
     end
   end
 
