@@ -99,6 +99,7 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    pg (0.18.4)
     puma (3.6.2)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -201,6 +202,7 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   listen (~> 3.0.5)
+  pg
   puma (~> 3.0)
   rails (~> 5.0.1)
   rake (< 11.0)
